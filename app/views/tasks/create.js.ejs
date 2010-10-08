@@ -1,0 +1,3 @@
+$('#tasks').prepend("<%-  partial('tasks/_incomplete_task.ejs', {collection:[task], as: 'task'}).replace(/"/gi,"\\\"").replace(/\n/gi, "\\n") %>");
+$('#task_<%=task._id%>').effect("highlight", {}, 2000);
+$('form#task_create input').val('').blur().focus();

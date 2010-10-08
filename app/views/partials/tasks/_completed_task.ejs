@@ -1,0 +1,5 @@
+<li class="task" id="task_<%= task._id %>">
+  <input action="/tasks/uncomplete/<%= task._id %>" checked="checked" data-method="put" data-remote="true" id="task_1_checkbox" name="task_1_checkbox" type="checkbox" />
+  <span><%= task.title %></span>
+  <a href="/tasks/<%= task._id %>" data-confirm="Are you sure you want to delete this task?" data-method="delete" data-remote="true" rel="nofollow">delete</a>
+</li>

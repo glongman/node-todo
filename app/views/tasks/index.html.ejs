@@ -1,0 +1,21 @@
+<div id="sidebar">
+  <h2>Your Tags</h2>
+  <ul id="tags">
+  <%- partial('tasks/_tag_link.ejs', {collection: all_tags, as: 'tag'}) %>
+  </ul>
+  <p><a href="/tasks">show all</a></p>  
+</div>
+<div id="main">
+  <form id="task_create" class="simple_form task" accept-charset="UTF-8" action="/tasks" method="post" data-remote="true">
+    <p class="input string optional">
+      <label class="string optional inline" for="task_name" style="display:none;"> Add a new task</label>
+      <input autocomplete="off" class="string optional" id="task_name" name="title" size="50" type="text" />
+    </p>
+  </form>
+  <ol id="tasks">
+    <%- partial('tasks/_incomplete_task.ejs', {collection: incomplete_tasks, as: 'task'}) %>
+  </ol>
+  <ul id="completed_tasks">
+    <%- partial('tasks/_completed_task.ejs', {collection: complete_tasks, as: 'task'}) %>
+  </ul>
+</div>
