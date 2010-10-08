@@ -1,9 +1,9 @@
-[submodule "deps/node-mongodb-native"]
-	path = deps/node-mongodb-native
+[submodule "vendor/node-mongodb-native"]
+	path = vendor/node-mongodb-native
 	url = http://github.com/christkv/node-mongodb-native.git
-[submodule "deps/connect"]
-	path = deps/connect
+[submodule "vendor/connect"]
+	path = vendor/connect
 	url = http://github.com/senchalabs/connect.git
-[submodule "deps/express"]
-	path = deps/express
+[submodule "vendor/express"]
+	path = vendor/express
 	url = http://github.com/visionmedia/express.git
