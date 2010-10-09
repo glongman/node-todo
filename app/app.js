@@ -17,7 +17,7 @@ app.configure(function(){
     app.set(i, ENV.config[i]);
 });
 
-app.configure('development' function() {
+app.configure('development', function() {
   app.use(express.errorHandler(
     {dumpExceptions:true, showStack:true}
   ));
