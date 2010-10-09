@@ -1,2 +1,3 @@
 .DS_Store
 /.settings.xml*
+/config/app_config.js

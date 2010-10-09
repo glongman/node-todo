@@ -30,8 +30,8 @@ Installation
     # Update submodules
     git submodule update --init --recursive
 
-    # Copy the default configuration file
-    cp config/app.json.sample config/app.json
+    # Copy the default configuration file and edit as you please.
+    cp config/app_config.js.sample config/app_config.js
 
 
 Running Node Todo
