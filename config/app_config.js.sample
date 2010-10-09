@@ -1,5 +1,31 @@
 // Global Configuration
 module.exports = {
-   name: "Todo",
-   port: "7270"
+ name: "Todo",
+ port: "7270",
+ database: {
+  development: {
+    name: 'todo_development',
+    host: 'localhost',
+    //port: 27017,
+    //username: 'dev_user',
+    //password: 'secret',
+    strict: true
+  },
+  test: {
+    name: 'todo_test',
+    host: 'localhost',
+    //port: 27017,
+    //username: 'test_user',
+    //password: 'secret',
+    strict: true
+  },
+  development: {
+    name: 'todo_production',
+    host: 'localhost',
+    //port: 27017,
+    //username: 'prod_user',
+    //password: 'secret',
+    strict: true
+  }
+ }
 }
