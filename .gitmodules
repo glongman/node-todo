@@ -7,3 +7,6 @@
 [submodule "vendor/express"]
 	path = vendor/express
 	url = http://github.com/visionmedia/express.git
+[submodule "vendor/cookie-sessions"]
+	path = vendor/cookie-sessions
+	url = http://github.com/caolan/cookie-sessions.git

@@ -22,6 +22,7 @@ if (global.TODO == undefined) {
     path.exists(self.root+'/config/app_config.js', function(exists) {
       if (exists) {
         self.config = require('config/app_config.js');
+        self.session_secret = self.getSessionSecret(self.config);
         self.config.database = self.config.database[process.env.NODE_ENV];
         console.log("Started with app_config: \n" + JSON.stringify(self.config, undefined, 4));
         callback();
@@ -30,6 +31,16 @@ if (global.TODO == undefined) {
         process.exit();
       }
     });
+  }
+  
+  AppEnvironment.prototype.getSessionSecret = function(config) {
+    if (config.session_secret == undefined || config.session_secret == 'REPLACE ME') {
+      console.log('config/app_config.js needs a random session secret. see the README FILE');
+      process.exit();
+    }
+    var secret = config.session_secret;
+    config.session_secret = 'hidden from prying eyes';
+    return secret;
   }
 
   AppEnvironment.prototype.setRequirePaths = function() {
@@ -40,7 +51,8 @@ if (global.TODO == undefined) {
         '/vendor/connect/lib',
         '/vendor/express/lib',
         '/vendor/express/support',
-        '/vendor/node-mongodb-native/lib'
+        '/vendor/node-mongodb-native/lib',
+        '/vendor/cookie-sessions/lib'
     ]
     //set the require paths
     for (i in requires)

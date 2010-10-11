@@ -2,6 +2,7 @@
 module.exports = {
  name: "Todo",
  port: "7270",
+ session_secret: 'REPLACE ME', // SEE THE README FILE
  database: {
   development: {
     name: 'todo_development',
@@ -19,7 +20,7 @@ module.exports = {
     //password: 'secret',
     strict: true
   },
-  development: {
+  production: {
     name: 'todo_production',
     host: 'localhost',
     //port: 27017,
