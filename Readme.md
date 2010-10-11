@@ -36,7 +36,7 @@ Installation
 Edit config/app_config.js adding a random session secret.
 
 I have not found a nice way to do this yet. Currently I run the following ruby script
-and paste the output into the file. You need ruby, rubygems, and the activesupport gem installed. I use version 2.3.5 of activesupport.
+and paste the output into the file. You need ruby, rubygems, and the activesupport gem installed. I used version 2.3.5 of activesupport.
     
     ruby -e "require 'rubygems';require 'active_support'; puts ActiveSupport::SecureRandom.hex(30)"
 
