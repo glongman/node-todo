@@ -27,6 +27,28 @@ jQuery(function($) {
     return false;
   });
 
+  var toggleLoading = function() { 
+    // TODO
+  };
+  
+  var ajaxErrorGrowl = function(data, xhr, status) {
+    var message = xhr.getResponseHeader("X-Message");
+    if (message == undefined) { message = "Try again in a few seconds."}
+    $.jGrowl(message, { header: 'Oops!'}); 
+  }
+  
+  $(document).ready(function() {
+    $('form[data-remote]')
+      .live("ajax:loading",   toggleLoading)
+      .live("ajax:complete",  toggleLoading)
+      .live("ajax:failure",   ajaxErrorGrowl)
+      .live("ajax:success", function(data, status, xhr) {
+        $("#response").html(status);
+    });
+    
+    $('input[data-remote]').live('ajax:failure',  ajaxErrorGrowl);
+  });
+  
 });
 
 

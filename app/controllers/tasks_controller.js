@@ -10,7 +10,6 @@ app.get('/', function(req, res) {
 });
 
 app.get('/tasks', function(req, res) {
-  sys.log('get');
   Tasks.findAllSplitByComplete(function(error, found) {
     res.render('tasks/index.html.ejs', {
       locals : {
@@ -23,22 +22,26 @@ app.get('/tasks', function(req, res) {
 });
 
 app.post('/tasks', function(req, res) {
-  sys.log('post');
-  sys.log(req.body.title);
   res.headers['Content-Type'] = 'application/javascript';
   Tasks.save(
     {title: req.param('title')},
     function (err, saved) { 
-      res.render('tasks/create.js.ejs', {layout:false, locals:{task:saved[0]}});
+      if (err) {
+        res.headers['X-Message'] = "Try again in a few seconds.";
+        res.send(400);
+      } else {
+        res.render('tasks/create.js.ejs', {layout:false, locals:{task:saved[0]}});
+      }
     }
   );
 });
 
 app.del('/tasks/:id', function(req, res) {
+  res.headers['Content-Type'] = 'application/javascript';
   Tasks.deleteById(req.param('id'), function(err, task){
     if (err) {
-      //what to do - some kind of error render I guess
-      sys.log(err);
+      res.headers['X-Message'] = err;
+      res.send(404);
     } else {
       res.render('tasks/deleted.js.ejs', {layout:false, locals:{task:task}});
     }
@@ -46,21 +49,24 @@ app.del('/tasks/:id', function(req, res) {
 });
 
 app.put('/tasks/complete/:id', function(req, res) {
+  res.headers['Content-Type'] = 'application/javascript';
   Tasks.updateById(req.param('id'), {complete: true}, function(err, task){
     if (err) {
-      sys.log(err);
+      res.headers['X-Message'] = err;
+      res.send(404);
     } else {
       res.render('tasks/complete.js.ejs', {layout:false, locals:{task:task}});
     }
   });
 });
 
-app.put('/tasks/uncomplete/:id', function(req, res){
+app.put('/tasks/uncomplete/:id', function(req, res) {
+  res.headers['Content-Type'] = 'application/javascript';
   Tasks.updateById(req.param('id'), {complete: false}, function(err, task){
     if (err) {
-      sys.log(err);
+      res.headers['X-Message'] = err;
+      res.send(404);
     } else {
-      // TODO persist the change
       res.render('tasks/uncomplete.js.ejs', {layout:false, locals:{task:task}});
     }
   });
@@ -69,10 +75,10 @@ app.put('/tasks/uncomplete/:id', function(req, res){
 app.put('/tasks/:id', function(req, res) {
   Tasks.updateById(req.param('id'), req.body, function(err, task){
     if (err) {
-      sys.log(err);
+      res.headers['X-Message'] = 'err';
+      res.send(404);
     } else {
       Tasks.allTags(function(all_tags) {
-        // TODO persist the change
         res.render('tasks/update.js.ejs', {layout:false, locals:{task:task, all_tags:all_tags}});
       })
     }
