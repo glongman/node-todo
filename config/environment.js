@@ -1,36 +1,30 @@
-if (global.TODO == undefined) {
+if (global.TODO_ENV == undefined) {
   
   var fs = require('fs'),
       path = require('path'); 
         
   var AppEnvironment = function() {
-    this.root = fs.realpathSync(__dirname + "/..");
     this.init();
   }
 
   AppEnvironment.prototype.init = function() {
+    this.setNodeEnvironment(process.env.NODE_ENV);
+    this.root = fs.realpathSync(__dirname + "/..");
     this.setRequirePaths();
-    this.setNodeEnvironment(process.env.NODE_ENV)
-    this.readConfig(function() {
-      require('app/server');
-    });
+    this.readConfig();
   }
 
-  AppEnvironment.prototype.readConfig = function(callback) {
-    var callback = callback;
-    var self = this;
-    path.exists(self.root+'/config/app_config.js', function(exists) {
-      if (exists) {
-        self.config = require('config/app_config.js');
-        self.session_secret = self.getSessionSecret(self.config);
-        self.config.database = self.config.database[process.env.NODE_ENV];
-        console.log("Started with app_config: \n" + JSON.stringify(self.config, undefined, 4));
-        callback();
-      } else {
-        console.log("File config/app_config.js not found: try `cp config/app_config.js.sample config/app_config.js`");
-        process.exit();
-      }
-    });
+  AppEnvironment.prototype.readConfig = function() {
+    try {
+      this.config = require('config/app_config.js');
+    } catch (e) {
+      console.log("File config/app_config.js not found: try `cp config/app_config.js.sample config/app_config.js`");
+      process.exit();
+    }
+    this.session_secret = this.getSessionSecret(this.config);
+    this.config.database = this.config.database[process.env.NODE_ENV];
+    console.log("Starting with app_config: \n" + JSON.stringify(this.config, undefined, 4));
+    
   }
   
   AppEnvironment.prototype.getSessionSecret = function(config) {
@@ -67,8 +61,13 @@ if (global.TODO == undefined) {
     }
     console.log("environment is "+process.env.NODE_ENV);
   }
+    
+  global.TODO_ENV = exports = module.exports = new AppEnvironment();
   
-  // global
-  global.TODO = new AppEnvironment();
-}    
-exports = module.exports = global.TODO;
+  if (process.env.NODE_ENV != 'test') {
+      var Server = require('app/server').Server;
+      new Server();
+  }
+} else {   
+  exports = module.exports = global.TODO_ENV;
+}
