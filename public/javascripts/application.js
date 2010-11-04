@@ -35,6 +35,7 @@ jQuery(function($) {
     var message = xhr.getResponseHeader("X-Message");
     if (message == undefined) { message = "Try again in a few seconds."}
     $.jGrowl(message, { header: 'Oops!'}); 
+    $(data.currentTarget).filter('form').find('input[type=text]').blur().focus();
   }
   
   $(document).ready(function() {

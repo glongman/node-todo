@@ -46,6 +46,7 @@ if (global.TODO_ENV == undefined) {
         '/vendor/express/lib',
         '/vendor/express/support',
         '/vendor/node-mongodb-native/lib',
+        '/vendor/node-promise',
         '/vendor/cookie-sessions/lib'
     ]
     //set the require paths

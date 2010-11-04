@@ -10,3 +10,6 @@
 [submodule "vendor/cookie-sessions"]
 	path = vendor/cookie-sessions
 	url = http://github.com/caolan/cookie-sessions.git
+[submodule "vendor/node-promise"]
+	path = vendor/node-promise
+	url = git://github.com/glongman/node-promise.git
